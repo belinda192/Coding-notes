@@ -1,1 +1,103 @@
 Python中用for遍历一个list或者tuple叫迭代iteration
+for 循环可以取出集合里的每一个元素。
+
+>     1. 有序集合：list，tuple，str和unicode；
+>     2. 无序集合：set
+>     3. 无序集合并且具有 key-value 对：dict
+
+用for循环迭代数列 1-100 并打印出7的倍数
+
+for i in range(1,101):
+    print i
+    
+for i in range(1, 101):
+    if i%7==0:
+        print i
+        
+
+python的迭代取的是元素本身，如果想取元素的索引，可以用enumerate()函数
+
+>>> L = ['Adam', 'Lisa', 'Bart', 'Paul']
+>>> for index, name in enumerate(L):
+...     print index, '-', name
+... 
+0 - Adam
+1 - Lisa
+2 - Bart
+3 - Paul
+
+迭代的每一个元素是一个tuple，
+
+for t in enumerate(L):
+    index = t[0]
+    name = t[1]
+    print index, '-', name
+    
+如果我们知道每个tuple元素都包含两个元素，for循环又可以进一步简写为：
+
+for index, name in enumerate(L):
+    print index, '-', name
+    
+这样不但代码更简单，而且还少了两条赋值语句。
+
+zip()函数可以把两个 list 变成一个 list：
+
+>>> zip([10, 20, 30], ['A', 'B', 'C'])
+[(10, 'A'), (20, 'B'), (30, 'C')]
+
+将四位同学的成绩排名和名字打印出来，以 名次从一开始 — 名字的格式 打印
+L = ['Adam', 'Lisa', 'Bart', 'Paul']
+    
+for index, name in zip(range(1,len(L)+1),L):
+    print index, '-', name
+    
+原来这个语言自己知道 谁是index 谁是name
+
+
+for 循环迭代的dict对象是 key, 如果想迭代出value的话，用values() 方法
+
+d = { 'Adam': 95, 'Lisa': 85, 'Bart': 59 }
+print d.values()
+# [85, 95, 59]
+for v in d.values():
+    print v
+# 85
+# 95
+# 59
+
+那这两个方法有何不同之处呢？
+
+1. values() 方法实际上把一个 dict 转换成了包含 value 的list。
+
+2. 但是 itervalues() 方法不会转换，它会在迭代过程中依次从 dict 中取出 value，所以 itervalues() 方法比 values() 方法节省了生成 list 所需的内存。
+
+3. 打印 itervalues() 发现它返回一个 <dictionary-valueiterator> 对象，这说明在Python中，for 循环可作用的迭代对象远不止 list，tuple，str，unicode，dict等，任何可迭代对象都可以作用于for循环，而内部如何迭代我们通常并不用关心。
+
+如果一个对象说自己可迭代，那我们就直接用 for 循环去迭代它，可见，迭代是一种抽象的数据操作，它不对迭代对象内部的数据有任何要求。
+
+
+***练习***
+给定一个dict：
+
+d = { 'Adam': 95, 'Lisa': 85, 'Bart': 59, 'Paul': 74 }
+
+请计算所有同学的平均分。
+
+d = { 'Adam': 95, 'Lisa': 85, 'Bart': 59, 'Paul': 74 }
+
+sum = 0.0
+for v in d.values():
+    sum=sum+v
+    print sum/len(d)
+    
+同时迭代key 和value 用item()
+
+>>> d = { 'Adam': 95, 'Lisa': 85, 'Bart': 59 }
+>>> print d.items()
+[('Lisa', 85), ('Adam', 95), ('Bart', 59)]
+>>> for key, value in d.items():
+...     print key, ':', value
+... 
+Lisa : 85
+Adam : 95
+Bart : 59
